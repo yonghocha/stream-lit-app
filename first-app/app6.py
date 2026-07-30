@@ -3,6 +3,14 @@ import os, json
 import pandas as pd
 import streamlit as st
 import streamlit.components.v1 as components
+from urllib.request import urlopen
+
+D3_SCRIPT_TAG = "<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js'></script>"
+
+@st.cache_data
+def getD3():
+    with urlopen("https://cdnjs.cloudflare.com/ajax/libs/d3/4.5.0/d3.min.js", timeout=10) as response:
+        return response.read().decode("utf-8")
 
 def getJson(df):
 
@@ -28,18 +36,20 @@ def getJson(df):
 def makeCollapsibleTree(df):
 
     # create HTML file from template customized with our JSON
-    with open(f"animated/templates/collapsible-tree.html", "r") as file:
+    with open("animated/templates/collapsible-tree.html", "r", encoding="utf-8") as file:
         content = file.read()
-        
+
     root = getJson(df)
-    filename = f'animated/collapsible-tree.html'
-    with open(filename, "w") as file:
-        file.write(content.replace('"{{data}}"', json.dumps(root, indent=4)))
+    content = content.replace(D3_SCRIPT_TAG, f"<script>{getD3()}</script>")
+    content = content.replace('"{{data}}"', json.dumps(root, indent=4))
+    filename = "animated/collapsible-tree.html"
+    with open(filename, "w", encoding="utf-8") as file:
+        file.write(content)
     return os.path.abspath(filename)
 
 def makeNetworkGraph(df):
 
-    data = Network(notebook=True, heading='')
+    data = Network(notebook=False, heading='', cdn_resources='in_line')
     data.barnes_hut(
         gravity=-80000,
         central_gravity=0.3,
@@ -61,7 +71,8 @@ def makeNetworkGraph(df):
         node["value"] = len(map[node["id"]])
 
     filename = "animated/network-graph.html"
-    data.show(filename)
+    with open(filename, "w", encoding="utf-8") as file:
+        file.write(data.generate_html(notebook=False))
     return os.path.abspath(filename)
 
 

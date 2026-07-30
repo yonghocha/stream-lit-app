@@ -29,6 +29,7 @@ fig = go.Figure(data)
 st.plotly_chart(fig, use_container_width=True)
 
 
+
 data = go.Sunburst(
     ids=labels,
     labels=labels,
@@ -36,6 +37,7 @@ data = go.Sunburst(
     insidetextorientation='horizontal')
 fig = go.Figure(data)
 st.plotly_chart(fig, use_container_width=True)
+
 
 
 data = go.Sankey(

@@ -41,7 +41,7 @@ def makeRadialDendrogram(df):
 
 def makeNetworkGraph(df):
 
-    data = Network(notebook=True, heading='')
+    data = Network(notebook=False, heading='', cdn_resources='in_line')
     data.barnes_hut(
         gravity=-80000,
         central_gravity=0.3,
@@ -63,5 +63,6 @@ def makeNetworkGraph(df):
         node["value"] = len(map[node["id"]])
 
     filename = utils.getFullPath("animated/network-graph.html")
-    data.show(filename)
+    with open(filename, "w", encoding="utf-8") as file:
+        file.write(data.generate_html(notebook=False))
     return os.path.abspath(filename)

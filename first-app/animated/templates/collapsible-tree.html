@@ -4,12 +4,20 @@
 <meta charset="UTF-8">
 <title>Collapsible Tree</title>
 <style>
+body {
+  margin: 0;
+  background: #fff;
+  color: #111;
+}
 .node circle {
   fill: #fff;
   stroke: steelblue;
   stroke-width: 1px;
 }
-.node text { font: 14px sans-serif; }
+.node text {
+  fill: #111;
+  font: 14px sans-serif;
+}
 .link {
   fill: none;
   stroke: #ccc;
@@ -148,7 +156,7 @@ class MyTree {
         this.barHeight = 20;
         this.barWidth = this.width * .8;
         this.i = 0;
-        this.duration = 750;
+        this.duration = 0;
         this.tree = tree().size([this.width, this.height]);
         this.tree = tree().nodeSize([0, 30]);
         this.root = this.tree(hierarchy(data));
@@ -165,6 +173,7 @@ class MyTree {
             .append('g')
             .attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
         this.update(this.root);
+        this.duration = 750;
     }
 };
 
