@@ -41,7 +41,7 @@ with st.sidebar:
     parent = st.selectbox("Parent Column Name", cols, index=1)
     df = df_orig[[child, parent]]
 
-    #st.sidebar.markdown(f"User: {st.experimental_user.email}")
+    st.sidebar.markdown(f"User: {st.experimental_user.email}")
 
 tabSource, tabFormat, tabGraph, tabChart, tabAnim = st.tabs(
     ["Source", "Format", "Graph", "Chart", "Animated"])
