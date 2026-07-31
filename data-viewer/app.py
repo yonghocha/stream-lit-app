@@ -15,7 +15,7 @@ st.title("Hierarchical Data Viewer")
 st.caption("Display your hierarchical data with charts and graphs.")
 
 #auth.check_password()
-#auth.check_user_and_password()
+auth.check_user_and_password()
 
 def getSessionId():
     if "session_id" not in st.session_state:
